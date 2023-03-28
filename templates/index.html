@@ -10,11 +10,27 @@
     <input id="input_message" type="text" placeholder="Enter message">
     <button id="send_button">Send</button>
     <div id="response"></div>
+    <button id="manda-mensaje">Manda</button>
 
     <script type="text/javascript">
         var socket = io.connect();
 
+        $('#manda-mensaje').click(function() {
+            console.log("manda mensaje");
+            $.ajax({
+              method: "GET",
+              url: "http://localhost:5000/hello/david"
+            }).done(function(data) {
+              alert(data); // imprimimos la respuesta
+            }).fail(function() {
+              alert("Algo salió mal");
+            }).always(function() {
+              alert("Siempre se ejecuta")
+            });
+        });
+
         $('#send_button').click(function() {
+            console.log("mensaje")
             var message = $('#input_message').val();
             socket.emit('message', message);
         });
