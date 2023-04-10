@@ -1,6 +1,8 @@
 import os
 from dotenv import load_dotenv
 from twitchio.ext import commands
+import twitchio
+import asyncio
 
 streamers = ['cursosdedesarrollo']
 
@@ -155,4 +157,4 @@ class Bot(commands.Bot):
 
 if __name__ == '__main__':
     bot = Bot()
-    bot.run()
+    asyncio.run(bot.run())

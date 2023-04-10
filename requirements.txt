@@ -1,3 +1,4 @@
 eventlet==0.33.3
 python-dotenv==0.20.0
 twitchio==2.6.0
+twitchAPI==3.10.0
