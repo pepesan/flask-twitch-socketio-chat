@@ -1,13 +1,19 @@
-from flask import Flask, render_template
-from flask_socketio import SocketIO, emit
 import os
-import logging
 from dotenv import load_dotenv
+from twitchio.ext import commands
+
+streamers = ['cursosdedesarrollo']
+
+
+def find_if_streamer_is_sender(streamer):
+    if streamer in streamers:
+        return True
+    else:
+        return False
+
 
 # Carga las variables de entorno desde .env
 load_dotenv()
-
-from twitchio.ext import commands
 
 
 class Bot(commands.Bot):
@@ -63,7 +69,7 @@ class Bot(commands.Bot):
 
         # Send a hello back!
         # Sending a reply back to the channel is easy... Below is an example.
-        await ctx.send(f'Ayuda: puedes usar los comandos: !youtube !redes !curso !github !discord')
+        await ctx.send(f'Ayuda: puedes usar los comandos: !youtube !redes !java !angular !github !discord')
 
     @commands.command()
     async def youtube(self, ctx: commands.Context):
@@ -73,10 +79,11 @@ class Bot(commands.Bot):
 
         # Send a hello back!
         # Sending a reply back to the channel is easy... Below is an example.
-        await ctx.send(f"El canal de Youtube es: https://www.youtube.com/@CursosdeDesarrollo")
+        await ctx.send(f"El canal de Youtube es: https://www.youtube.com/@CursosdeDesarrollo"
+                       f" , Canal secundario https://www.youtube.com/@CursosDesencadenado")
 
     @commands.command()
-    async def curso(self, ctx: commands.Context):
+    async def java(self, ctx: commands.Context):
         # Here we have a command hello, we can invoke our command with our prefix and command name
         # e.g ?hello
         # We can also give our commands aliases (different names) to invoke with.
@@ -86,6 +93,18 @@ class Bot(commands.Bot):
         await ctx.send(
             f"Este es el enlace al curso de java en Youtube: "
             f"https://www.youtube.com/watch?v=JExfQrDN03k&list=PLd7FFr2YzghOjHnoLF_yLjjOFnknA8qJj")
+
+    @commands.command()
+    async def angular(self, ctx: commands.Context):
+        # Here we have a command hello, we can invoke our command with our prefix and command name
+        # e.g ?hello
+        # We can also give our commands aliases (different names) to invoke with.
+
+        # Send a hello back!
+        # Sending a reply back to the channel is easy... Below is an example.
+        await ctx.send(
+            f"Este es el enlace al curso de angular en Youtube: "
+            f"https://www.youtube.com/watch?v=UGBWmShB4J8&list=PLd7FFr2YzghNPi66KMyBbrBmJzH-RPYz0")
 
     @commands.command()
     async def redes(self, ctx: commands.Context):
@@ -117,52 +136,23 @@ class Bot(commands.Bot):
         # Send a hello back!
         # Sending a reply back to the channel is easy... Below is an example.
         await ctx.send(f"El perfil de github es: https://github.com/pepesan")
+
     @commands.command()
     async def so(self, ctx: commands.Context):
-        # Here we have a command hello, we can invoke our command with our prefix and command name
-        # e.g ?hello
-        # We can also give our commands aliases (different names) to invoke with.
+        # print(ctx.author.name)
+        # print(type(ctx.author.name))
+        if find_if_streamer_is_sender(ctx.author.name):
+            # print("imprimiendo")
+            try:
+                channel_name = ctx.message.content.split(" ")[1]
+                await ctx.send(f'Echale un vistazo al canal de https://twitch.tv/{channel_name}')
+                # print("mandado")
+            except Exception as e:
+                # print("excepción")
+                # Manejo de cualquier excepción
+                print("Se produjo una excepción:", type(e).__name__)
 
-        # Send a hello back!
-        # Sending a reply back to the channel is easy... Below is an example.
-        channel_name = ctx.message.content.split(" ")[1]
-        await ctx.send(f'Echale un vistazo al canal de https://twitch.tv/{channel_name}')
-
-
-app = Flask(__name__)
-app.config['SECRET_KEY'] = 'secret!'
-app.logger.setLevel(logging.INFO)
-socketio = SocketIO(app, cors_allowed_origins="*")
-
-
-@app.route('/')
-def index():
-    return render_template('index.html')
-
-
-@app.route('/hello/<string:name>')
-async def hello_name(name):
-    print(name)
-    # await bot.sendMessage("Suerte!")
-    return f'Hola {name}!'
-
-
-@socketio.on('message')
-def handle_message(message):
-    print('received message: ' + message)
-    emit('response', 'Server received message: ' + message)
-
-
-import threading
-
-bot = Bot()
-# Iniciar el bot de Twitch en un hilo separado
-bot_thread = threading.Thread(target=bot.run)
-bot_thread.start()
 
 if __name__ == '__main__':
-    # bot = Bot()
-    # bot.run()
-    # Iniciar Flask y SocketIO en un hilo
-    socketio_thread = threading.Thread(target=socketio.run, args=(app,))
-    socketio_thread.start()
+    bot = Bot()
+    bot.run()
