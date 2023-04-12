@@ -1,9 +1,10 @@
 # Servidor de Python para cliente del chat de twitch
 
-## Instalación de dependencias
+## app.py (TwitchIO)
+### Instalación de dependencias
 pip install -r requirements.txt
 
-## Configuración
+### Configuración
 
 * Configura una nueva cuenta en Twitch para el bot
 * Genera una nueva nueva aplicación en [https://dev.twitch.tv/](https://dev.twitch.tv/)
@@ -28,3 +29,16 @@ Edita el fichero .env con los datos del bot:
 
 ## Arranque del servidor
 ./run.sh
+
+## bot-twitchapi-chat.py (TwitchAPI library)
+* Configura una nueva cuenta en Twitch para el bot
+* Genera una nueva nueva aplicación en [https://dev.twitch.tv/](https://dev.twitch.tv/)
+* Vete a Aplicaciones
+* Registra tu aplicación
+* Mete el nombre de la aplicación (nombre del bot)
+* Mete una URL por ejemplo [http://localhost:17563](http://localhost:17563)
+* Elige la categoría ChatBot
+* Añadela
+* Genera un nuevo Secreto
+* Guarda el client ID y el Client Secret
+* Modifica el TWITCH_CLIENT_ID y el TWITCH_CLIENT_SECRET

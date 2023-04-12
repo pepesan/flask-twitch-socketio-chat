@@ -34,6 +34,14 @@ async def twitch_example(streamer):
         print(video.type)
         print(video.title)
         print(video.description)
+
+    video_data = twitch.get_streams(user_id=user.id, first=1)
+    print("streams")
+    async for video in video_data:
+        print(video)
+        print(video.type)
+        print(video.title)
+        print(video.description)
     await twitch.close()
 
 

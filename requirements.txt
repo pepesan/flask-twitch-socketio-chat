@@ -2,3 +2,6 @@ eventlet==0.33.3
 python-dotenv==0.20.0
 twitchio==2.6.0
 twitchAPI==3.10.0
+flask~=2.2.3
+chardet==5.1.0
+cchardet==2.1.7

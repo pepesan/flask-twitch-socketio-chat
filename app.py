@@ -1,14 +1,15 @@
 import os
 from dotenv import load_dotenv
-from twitchio.ext import commands
-import twitchio
+from twitchio.ext import commands, eventsub
 import asyncio
 
+
 streamers = ['cursosdedesarrollo']
+streamer = "cursosdedesarrollo"
 
 
-def find_if_streamer_is_sender(streamer):
-    if streamer in streamers:
+def find_if_streamer_is_sender(streamer_name):
+    if streamer_name in streamers:
         return True
     else:
         return False
@@ -26,7 +27,7 @@ class Bot(commands.Bot):
         # initial_channels can also be a callable which returns a list of strings...
         print("iniciando cliente de twitch")
         super().__init__(token=os.environ['TWITCH_ACCESS_TOKEN'], prefix='!',
-                         initial_channels=['cursosdedesarrollo', 'chrisvdev', 'viciostv'])
+                         initial_channels=streamers)
 
     async def event_ready(self):
         # Notify us when everything is ready!
@@ -52,6 +53,13 @@ class Bot(commands.Bot):
         # Since we have commands and are overriding the default `event_message`
         # We must let the bot know we want to handle and invoke our commands...
         await self.handle_commands(message)
+
+    async def event_join(self, channel, user):
+        print(dir(user))
+        print(f'User joined: ' + str(user.name))
+        print(f'User tags: ' + str(user._tags))
+        print(f'User is mod: ' + str(user.is_mod))
+
 
     @commands.command()
     async def hello(self, ctx: commands.Context):
@@ -156,5 +164,11 @@ class Bot(commands.Bot):
 
 
 if __name__ == '__main__':
-    bot = Bot()
-    asyncio.run(bot.run())
+    try:
+        bot = Bot()
+        asyncio.run(bot.run())
+
+
+    except ValueError as e:
+        print("Error al inicializar el bot:", e)
+        # Realice cualquier acción necesaria para manejar el error aquí
