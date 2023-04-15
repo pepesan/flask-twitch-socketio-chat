@@ -6,14 +6,23 @@ from twitchAPI.helper import first
 load_dotenv()
 from twitchAPI import Twitch
 from twitchAPI.oauth import UserAuthenticator
-from twitchAPI.types import AuthScope, ChatEvent, SortMethod
+from twitchAPI.types import AuthScope, ChatEvent, SortMethod, TwitchAPIException
 from twitchAPI.chat import Chat, EventData, ChatMessage, ChatSub, ChatCommand
 import asyncio
 
 APP_ID = os.environ['TWITCH_CLIENT_ID']
 APP_SECRET = os.environ['TWITCH_CLIENT_SECRET']
-USER_SCOPE = [AuthScope.CHAT_READ, AuthScope.CHAT_EDIT, AuthScope.MODERATOR_MANAGE_SHOUTOUTS]
+USER_SCOPE = [
+    # leer el chat
+    AuthScope.CHAT_READ,
+    # escribir en el chat
+    AuthScope.CHAT_EDIT,
+    # mandar SO's (el usuario del bot debe ser moderador)
+    AuthScope.MODERATOR_MANAGE_SHOUTOUTS,
+    # leer followers (el usuario del bot debe ser moderador)
+    AuthScope.MODERATOR_READ_FOLLOWERS]
 TARGET_CHANNEL = os.environ['TWITCH_CHANNEL']
+BOT_USERNAME = os.environ['TWITCH_USERNAME']
 
 
 async def get_user_last_video(channel_name):
@@ -25,7 +34,7 @@ async def get_user_last_video(channel_name):
     user = await first(twitch.get_users(logins=channel_name))
     video_data = twitch.get_videos(user_id=user.id, first=1, sort=SortMethod.TIME)
     # cerrando la conexión
-    twitch.close()
+    await twitch.close()
     return video_data
 
 
@@ -37,20 +46,26 @@ async def get_user_last_stream(channel_name):
     # using the first helper makes this easy.
     user = await first(twitch.get_users(logins=channel_name))
     video_data = twitch.get_streams(user_id=user.id, first=1)
-    twitch.close()
+    await twitch.close()
     return video_data
 
 
 async def shoutout_from_to(channel_name):
     twitch = await Twitch(os.environ['TWITCH_CLIENT_ID'], os.environ['TWITCH_CLIENT_SECRET'])
+    twitch.app_auth_refresh_callback = app_refresh
+    twitch.user_auth_refresh_callback = user_refresh
+    auth = UserAuthenticator(twitch, USER_SCOPE, force_verify=False)
+    token, refresh_token = await auth.authenticate()
+    await twitch.set_user_authentication(token, USER_SCOPE, refresh_token)
     # call the API for the data of your twitch user
     # this returns a async generator that can be used to iterate over all results
     # but we are just interested in the first result
     # using the first helper makes this easy.
     user = await first(twitch.get_users(logins=channel_name))
+    bot = await first(twitch.get_users(logins=BOT_USERNAME))
     streamer = await first(twitch.get_users(logins=TARGET_CHANNEL))
-    await twitch.send_a_shoutout(streamer.id, user.id, streamer.id)
-    twitch.close()
+    await twitch.send_a_shoutout(streamer.id, user.id, bot.id)
+    await twitch.close()
 
 
 async def user_refresh(token: str, refresh_token: str):
@@ -77,6 +92,7 @@ async def on_message(msg: ChatMessage):
 
 # this will be called whenever someone subscribes to a channel
 async def on_sub(sub: ChatSub):
+    print(sub)
     print(f'New subscription in {sub.room.name}:\\n'
           f'  Type: {sub.sub_plan}\\n'
           f'  Message: {sub.sub_message}')
@@ -84,6 +100,7 @@ async def on_sub(sub: ChatSub):
 
 async def on_raid(raid: ChatEvent):
     print(f"New Raid: {raid}")
+    print(raid)
     print(raid.__dict__)
 
 
@@ -96,41 +113,41 @@ async def on_raid(raid: ChatEvent):
 #        await cmd.reply(f'{cmd.user.name}: {cmd.parameter}')
 
 async def help_command(cmd: ChatCommand):
-    print(cmd)
+    # print(cmd)
     await cmd.reply('Ayuda: puedes usar los comandos: !youtube !redes !java !angular !github !discord')
 
 
 async def youtube_command(cmd: ChatCommand):
-    print(cmd)
+    # print(cmd)
     await cmd.reply('El canal de Youtube es: https://www.youtube.com/@CursosdeDesarrollo , Canal secundario '
                     'https://www.youtube.com/@CursosDesencadenado')
 
 
 async def redes_command(cmd: ChatCommand):
-    print(cmd)
+    # print(cmd)
     await cmd.reply("Enlaces de contacto: https://twitter.com/dvaquero , https://twitter.com/CDDesarrollo y "
                     "https://www.linkedin.com/in/davidvaquero/")
 
 
 async def java_command(cmd: ChatCommand):
-    print(cmd)
+    # print(cmd)
     await cmd.reply("Este es el enlace al curso de java en Youtube: "
                     "https://www.youtube.com/watch?v=JExfQrDN03k&list=PLd7FFr2YzghOjHnoLF_yLjjOFnknA8qJj")
 
 
 async def angular_command(cmd: ChatCommand):
-    print(cmd)
+    # print(cmd)
     await cmd.reply("Este es el enlace al curso de angular en Youtube: "
                     "https://www.youtube.com/watch?v=UGBWmShB4J8&list=PLd7FFr2YzghNPi66KMyBbrBmJzH-RPYz0")
 
 
 async def github_command(cmd: ChatCommand):
-    print(cmd)
+    # print(cmd)
     await cmd.reply("El perfil de github es: https://github.com/pepesan")
 
 
 async def discord_command(cmd: ChatCommand):
-    print(cmd)
+    # print(cmd)
     await cmd.reply("El servidor de discord está en: https://discord.gg/9eWkvyR")
 
 
@@ -140,6 +157,13 @@ async def so_command(cmd: ChatCommand):
     # print(cmd.text)
     # print(cmd.parameter)
     channel_name = cmd.parameter
+    try:
+        await shoutout_from_to(channel_name)
+    except TwitchAPIException:
+        print("An exception while shoutouting")
+    """
+    await cmd.reply(f"/shoutout {channel_name}")
+    """
     video_data = await get_user_last_video(channel_name)
     # print("Video")
     async for video in video_data:
@@ -150,7 +174,6 @@ async def so_command(cmd: ChatCommand):
         await cmd.reply(f"Echale un vistazo al canal de https://twitch.tv/{channel_name}."
                         f" El último video fue sobre: {video.title}")
         break
-    """
     stream_data = await get_user_last_stream(channel_name)
     print("Stream")
     async for stream in stream_data:
@@ -158,7 +181,6 @@ async def so_command(cmd: ChatCommand):
         print(stream.title)
     # twitchAPI.types.UnauthorizedException: require user authentication!
     # await shoutout_from_to(cmd.parameter)
-    """
 
 
 # this is where we set up the bot
@@ -170,6 +192,7 @@ async def run():
     auth = UserAuthenticator(twitch, USER_SCOPE, force_verify=False)
     token, refresh_token = await auth.authenticate()
     await twitch.set_user_authentication(token, USER_SCOPE, refresh_token)
+
     # create chat instance
     chat = await Chat(twitch)
 
