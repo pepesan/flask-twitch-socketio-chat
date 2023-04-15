@@ -13,7 +13,7 @@ import asyncio
 APP_ID = os.environ['TWITCH_CLIENT_ID']
 APP_SECRET = os.environ['TWITCH_CLIENT_SECRET']
 USER_SCOPE = [AuthScope.CHAT_READ, AuthScope.CHAT_EDIT, AuthScope.MODERATOR_MANAGE_SHOUTOUTS]
-TARGET_CHANNEL = 'cursosdedesarrollo'
+TARGET_CHANNEL = os.environ['TWITCH_CHANNEL']
 
 
 async def get_user_last_video(channel_name):
@@ -24,17 +24,20 @@ async def get_user_last_video(channel_name):
     # using the first helper makes this easy.
     user = await first(twitch.get_users(logins=channel_name))
     video_data = twitch.get_videos(user_id=user.id, first=1, sort=SortMethod.TIME)
+    # cerrando la conexión
+    twitch.close()
     return video_data
 
 
 async def get_user_last_stream(channel_name):
-    twitch = await Twitch(os.environ['TWITCH_CLIENT_ID'], os.environ['TWITCH_CLIENT_SECRET'])
+    twitch = await Twitch(APP_ID, APP_SECRET)
     # call the API for the data of your twitch user
     # this returns a async generator that can be used to iterate over all results
     # but we are just interested in the first result
     # using the first helper makes this easy.
     user = await first(twitch.get_users(logins=channel_name))
     video_data = twitch.get_streams(user_id=user.id, first=1)
+    twitch.close()
     return video_data
 
 
@@ -47,7 +50,7 @@ async def shoutout_from_to(channel_name):
     user = await first(twitch.get_users(logins=channel_name))
     streamer = await first(twitch.get_users(logins=TARGET_CHANNEL))
     await twitch.send_a_shoutout(streamer.id, user.id, streamer.id)
-
+    twitch.close()
 
 
 async def user_refresh(token: str, refresh_token: str):
@@ -63,7 +66,7 @@ async def on_ready(ready_event: EventData):
     print('Bot is ready for work, joining channels')
     # join our target channel, if you want to join multiple, either call join for each individually
     # or even better pass a list of channels as the argument
-    await ready_event.chat.join_room(TARGET_CHANNEL)
+    await ready_event.chat.join_room(os.environ['TWITCH_CHANNEL'])
     # you can do other bot initialization things in here
 
 
@@ -132,18 +135,18 @@ async def discord_command(cmd: ChatCommand):
 
 
 async def so_command(cmd: ChatCommand):
-    #print(cmd)
-    #print(cmd.user.name)
-    #print(cmd.text)
-    #print(cmd.parameter)
+    # print(cmd)
+    # print(cmd.user.name)
+    # print(cmd.text)
+    # print(cmd.parameter)
     channel_name = cmd.parameter
     video_data = await get_user_last_video(channel_name)
-    #print("Video")
+    # print("Video")
     async for video in video_data:
-        #print(video)
-        #print(video.type)
-        #print(video.title)
-        #print(video.description)
+        # print(video)
+        # print(video.type)
+        # print(video.title)
+        # print(video.description)
         await cmd.reply(f"Echale un vistazo al canal de https://twitch.tv/{channel_name}."
                         f" El último video fue sobre: {video.title}")
         break
@@ -156,6 +159,7 @@ async def so_command(cmd: ChatCommand):
     # twitchAPI.types.UnauthorizedException: require user authentication!
     # await shoutout_from_to(cmd.parameter)
     """
+
 
 # this is where we set up the bot
 async def run():
