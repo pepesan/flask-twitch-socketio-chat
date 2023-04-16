@@ -1,0 +1,235 @@
+{
+    "streamdeck_ui_version": 1,
+    "state": {
+        "AL17J2C03245": {
+            "buttons": {
+                "0": {
+                    "0": {
+                        "text": "Comienzo",
+                        "command": "change_scene.sh scene \"Empezamos en breve\"",
+                        "text_vertical_align": "middle-bottom",
+                        "icon": "/home/pepesan/PycharmProjects/flask-twitch-socketio-chat/Baseline - Stream Deck Icons/Main/Scene 2 - On.png"
+                    },
+                    "1": {
+                        "text": "chat",
+                        "command": "change_scene.sh scene 'Charlando con chat y alertas'",
+                        "text_vertical_align": "middle-bottom",
+                        "icon": "/home/pepesan/PycharmProjects/flask-twitch-socketio-chat/Baseline - Stream Deck Icons/AppsWeb/App - Voice Mod - Instant Censor Beep.png"
+                    },
+                    "2": {
+                        "command": "change_scene.sh scene 'nuevo full camera sin titulo'",
+                        "text": "Full",
+                        "text_vertical_align": "middle-bottom",
+                        "icon": "/home/pepesan/PycharmProjects/flask-twitch-socketio-chat/Baseline - Stream Deck Icons/Main/Source - On.png"
+                    },
+                    "3": {
+                        "command": "change_scene.sh scene 'nuevo full escritorio  y camara sin fondo'",
+                        "text": "escri +cam",
+                        "text_vertical_align": "middle-bottom",
+                        "icon": "/home/pepesan/PycharmProjects/flask-twitch-socketio-chat/Baseline - Stream Deck Icons/Main/Multimedia - Switch Profile.png"
+                    },
+                    "4": {
+                        "command": "change_scene.sh scene 'pantalla Dell'",
+                        "text": "completa",
+                        "text_vertical_align": "middle-bottom",
+                        "icon": "/home/pepesan/PycharmProjects/flask-twitch-socketio-chat/Baseline - Stream Deck Icons/Main/Scene element - On.png"
+                    },
+                    "5": {
+                        "command": "change_scene.sh scene 'Enseguida Volvemos'",
+                        "text": "Pausa",
+                        "icon": "/home/pepesan/PycharmProjects/flask-twitch-socketio-chat/Baseline - Stream Deck Icons/Main/Scene 1 - On.png"
+                    },
+                    "6": {
+                        "icon": "/home/pepesan/PycharmProjects/flask-twitch-socketio-chat/Baseline - Stream Deck Icons/Main/Stream - On.png",
+                        "command": "change_scene.sh record on"
+                    },
+                    "7": {
+                        "icon": "/home/pepesan/PycharmProjects/flask-twitch-socketio-chat/Baseline - Stream Deck Icons/Main/Stream - Off.png",
+                        "command": "change_scene.sh record off"
+                    },
+                    "8": {
+                        "icon": "/home/pepesan/PycharmProjects/flask-twitch-socketio-chat/Baseline - Stream Deck Icons/Main/Record - On.png",
+                        "command": "change_scene.sh emit on"
+                    },
+                    "9": {
+                        "icon": "/home/pepesan/PycharmProjects/flask-twitch-socketio-chat/Baseline - Stream Deck Icons/Main/Record - Off.png",
+                        "command": "change_scene.sh emit off"
+                    },
+                    "10": {},
+                    "11": {},
+                    "12": {},
+                    "13": {},
+                    "14": {
+                        "switch_page": 2,
+                        "text": "pag2",
+                        "icon": "/home/pepesan/PycharmProjects/flask-twitch-socketio-chat/Baseline - Stream Deck Icons/Main/Flashback.png"
+                    }
+                },
+                "1": {
+                    "0": {
+                        "text": "Chrome",
+                        "command": "google-chrome-stable",
+                        "icon": "/home/pepesan/PycharmProjects/flask-twitch-socketio-chat/Baseline - Stream Deck Icons/AppsWeb/App - Chrome.png"
+                    },
+                    "1": {},
+                    "2": {},
+                    "3": {},
+                    "4": {},
+                    "5": {},
+                    "6": {},
+                    "7": {},
+                    "8": {},
+                    "9": {},
+                    "10": {
+                        "text": "pag1",
+                        "switch_page": 1,
+                        "icon": "/home/pepesan/PycharmProjects/flask-twitch-socketio-chat/Baseline - Stream Deck Icons/Main/Flashback.png"
+                    },
+                    "11": {},
+                    "12": {},
+                    "13": {},
+                    "14": {}
+                },
+                "2": {
+                    "0": {},
+                    "1": {},
+                    "2": {},
+                    "3": {},
+                    "4": {},
+                    "5": {},
+                    "6": {},
+                    "7": {},
+                    "8": {},
+                    "9": {},
+                    "10": {},
+                    "11": {},
+                    "12": {},
+                    "13": {},
+                    "14": {}
+                },
+                "3": {
+                    "0": {},
+                    "1": {},
+                    "2": {},
+                    "3": {},
+                    "4": {},
+                    "5": {},
+                    "6": {},
+                    "7": {},
+                    "8": {},
+                    "9": {},
+                    "10": {},
+                    "11": {},
+                    "12": {},
+                    "13": {},
+                    "14": {}
+                },
+                "4": {
+                    "0": {},
+                    "1": {},
+                    "2": {},
+                    "3": {},
+                    "4": {},
+                    "5": {},
+                    "6": {},
+                    "7": {},
+                    "8": {},
+                    "9": {},
+                    "10": {},
+                    "11": {},
+                    "12": {},
+                    "13": {},
+                    "14": {}
+                },
+                "5": {
+                    "0": {},
+                    "1": {},
+                    "2": {},
+                    "3": {},
+                    "4": {},
+                    "5": {},
+                    "6": {},
+                    "7": {},
+                    "8": {},
+                    "9": {},
+                    "10": {},
+                    "11": {},
+                    "12": {},
+                    "13": {},
+                    "14": {}
+                },
+                "6": {
+                    "0": {},
+                    "1": {},
+                    "2": {},
+                    "3": {},
+                    "4": {},
+                    "5": {},
+                    "6": {},
+                    "7": {},
+                    "8": {},
+                    "9": {},
+                    "10": {},
+                    "11": {},
+                    "12": {},
+                    "13": {},
+                    "14": {}
+                },
+                "7": {
+                    "0": {},
+                    "1": {},
+                    "2": {},
+                    "3": {},
+                    "4": {},
+                    "5": {},
+                    "6": {},
+                    "7": {},
+                    "8": {},
+                    "9": {},
+                    "10": {},
+                    "11": {},
+                    "12": {},
+                    "13": {},
+                    "14": {}
+                },
+                "8": {
+                    "0": {},
+                    "1": {},
+                    "2": {},
+                    "3": {},
+                    "4": {},
+                    "5": {},
+                    "6": {},
+                    "7": {},
+                    "8": {},
+                    "9": {},
+                    "10": {},
+                    "11": {},
+                    "12": {},
+                    "13": {},
+                    "14": {}
+                },
+                "9": {
+                    "0": {},
+                    "1": {},
+                    "2": {},
+                    "3": {},
+                    "4": {},
+                    "5": {},
+                    "6": {},
+                    "7": {},
+                    "8": {},
+                    "9": {},
+                    "10": {},
+                    "11": {},
+                    "12": {},
+                    "13": {},
+                    "14": {}
+                }
+            },
+            "page": 0,
+            "brightness": 99,
+            "brightness_dimmed": 0
+        }
+    }
+}

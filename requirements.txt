@@ -5,3 +5,4 @@ twitchAPI==3.10.0
 flask~=2.2.3
 chardet==5.1.0
 cchardet==2.1.7
+obsws_python==1.4.2
