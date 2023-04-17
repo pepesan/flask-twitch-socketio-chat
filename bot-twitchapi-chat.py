@@ -23,10 +23,12 @@ USER_SCOPE = [
     AuthScope.MODERATOR_READ_FOLLOWERS]
 TARGET_CHANNEL = os.environ['TWITCH_CHANNEL']
 BOT_USERNAME = os.environ['TWITCH_USERNAME']
+import chat
+
+twitch = ""
 
 
-async def get_user_last_video(channel_name):
-    twitch = await Twitch(os.environ['TWITCH_CLIENT_ID'], os.environ['TWITCH_CLIENT_SECRET'])
+async def get_user_last_video(channel_name, twitch):
     # call the API for the data of your twitch user
     # this returns a async generator that can be used to iterate over all results
     # but we are just interested in the first result
@@ -158,41 +160,43 @@ async def so_command(cmd: ChatCommand):
     # print(cmd.parameter)
     channel_name = cmd.parameter
     try:
+        print(twitch)
         await shoutout_from_to(channel_name)
-    except TwitchAPIException:
+        try:
+            video_data = await get_user_last_video(channel_name, twitch)
+            # print("Video")
+            async for video in video_data:
+                # print(video)
+                # print(video.type)
+                # print(video.title)
+                # print(video.description)
+                await cmd.reply(f"Echale un vistazo al canal de https://twitch.tv/{channel_name}."
+                                f" El último video fue sobre: {video.title}")
+                break
+            stream_data = await get_user_last_stream(channel_name)
+            print("Stream")
+            async for stream in stream_data:
+                print(stream)
+                print(stream.title)
+            # twitchAPI.types.UnauthorizedException: require user authentication!
+            # await shoutout_from_to(cmd.parameter)
+        except TwitchAPIException as t:
+            print("An exception while getting user data")
+            print(t)
+    except TwitchAPIException as t:
         print("An exception while shoutouting")
+        print(t)
     """
     await cmd.reply(f"/shoutout {channel_name}")
     """
-    video_data = await get_user_last_video(channel_name)
-    # print("Video")
-    async for video in video_data:
-        # print(video)
-        # print(video.type)
-        # print(video.title)
-        # print(video.description)
-        await cmd.reply(f"Echale un vistazo al canal de https://twitch.tv/{channel_name}."
-                        f" El último video fue sobre: {video.title}")
-        break
-    stream_data = await get_user_last_stream(channel_name)
-    print("Stream")
-    async for stream in stream_data:
-        print(stream)
-        print(stream.title)
-    # twitchAPI.types.UnauthorizedException: require user authentication!
-    # await shoutout_from_to(cmd.parameter)
+
 
 
 # this is where we set up the bot
 async def run():
+    import chat
     # set up twitch api instance and add user authentication with some scopes
-    twitch = await Twitch(APP_ID, APP_SECRET)
-    twitch.app_auth_refresh_callback = app_refresh
-    twitch.user_auth_refresh_callback = user_refresh
-    auth = UserAuthenticator(twitch, USER_SCOPE, force_verify=False)
-    token, refresh_token = await auth.authenticate()
-    await twitch.set_user_authentication(token, USER_SCOPE, refresh_token)
-
+    twitch = await chat.get_chat_bot()
     # create chat instance
     chat = await Chat(twitch)
 
@@ -228,5 +232,5 @@ async def run():
         await twitch.close()
 
 
-# lets run our setup
-asyncio.run(run())
+if __name__ == '__main__':
+    asyncio.run(run())
