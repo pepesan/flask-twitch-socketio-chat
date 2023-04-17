@@ -31,12 +31,13 @@ TARGET_CHANNEL = os.environ['TWITCH_CHANNEL']
 BOT_USERNAME = os.environ['TWITCH_USERNAME']
 
 
-async def get_chat_bot():
-    # set up twitch api instance and add user authentication with some scopes
-    twitch = await Twitch(APP_ID, APP_SECRET)
-    twitch.app_auth_refresh_callback = app_refresh
-    twitch.user_auth_refresh_callback = user_refresh
-    auth = UserAuthenticator(twitch, USER_SCOPE, force_verify=False)
-    token, refresh_token = await auth.authenticate()
-    await twitch.set_user_authentication(token, USER_SCOPE, refresh_token)
+async def get_chat_bot(twitch):
+    if twitch == "":
+        # set up twitch api instance and add user authentication with some scopes
+        twitch = await Twitch(APP_ID, APP_SECRET)
+        twitch.app_auth_refresh_callback = app_refresh
+        twitch.user_auth_refresh_callback = user_refresh
+        auth = UserAuthenticator(twitch, USER_SCOPE, force_verify=False)
+        token, refresh_token = await auth.authenticate()
+        await twitch.set_user_authentication(token, USER_SCOPE, refresh_token)
     return twitch
