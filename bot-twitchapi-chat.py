@@ -6,7 +6,7 @@ from twitchAPI.helper import first
 load_dotenv()
 from twitchAPI import Twitch
 from twitchAPI.oauth import UserAuthenticator
-from twitchAPI.types import AuthScope, ChatEvent, SortMethod, TwitchAPIException
+from twitchAPI.types import AuthScope, ChatEvent, SortMethod, TwitchAPIException, TwitchBackendException
 from twitchAPI.chat import Chat, EventData, ChatMessage, ChatSub, ChatCommand
 import asyncio
 
@@ -68,6 +68,32 @@ async def shoutout_from_to(channel_name):
     streamer = await first(twitch.get_users(logins=TARGET_CHANNEL))
     await twitch.send_a_shoutout(streamer.id, user.id, bot.id)
     await twitch.close()
+
+
+async def chat_so(channel_name, cmd):
+    try:
+        video_data = await get_user_last_video(channel_name)
+        # print("Video")
+        async for video in video_data:
+            # print(video)
+            # print(video.type)
+            # print(video.title)
+            # print(video.description)
+            await cmd.reply(f"Echale un vistazo al canal de https://twitch.tv/{channel_name}."
+                            f" El último video fue sobre: {video.title}")
+            break
+        stream_data = await get_user_last_stream(channel_name)
+        print("Stream")
+        async for stream in stream_data:
+            print(stream)
+            print(stream.title)
+        # twitchAPI.types.UnauthorizedException: require user authentication!
+        # await shoutout_from_to(cmd.parameter)
+    except TwitchAPIException as t:
+        print("An exception while consulting user")
+        print(type(t))
+        print(t)
+        print(t.args)
 
 
 async def user_refresh(token: str, refresh_token: str):
