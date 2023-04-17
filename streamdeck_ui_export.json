@@ -40,25 +40,37 @@
                         "icon": "/home/pepesan/PycharmProjects/flask-twitch-socketio-chat/Baseline - Stream Deck Icons/Main/Scene 1 - On.png"
                     },
                     "6": {
-                        "icon": "/home/pepesan/PycharmProjects/flask-twitch-socketio-chat/Baseline - Stream Deck Icons/Main/Stream - On.png",
+                        "icon": "/home/pepesan/PycharmProjects/flask-twitch-socketio-chat/Baseline - Stream Deck Icons/Main/Record - On.png",
                         "command": "change_scene.sh record on"
                     },
                     "7": {
-                        "icon": "/home/pepesan/PycharmProjects/flask-twitch-socketio-chat/Baseline - Stream Deck Icons/Main/Stream - Off.png",
+                        "icon": "/home/pepesan/PycharmProjects/flask-twitch-socketio-chat/Baseline - Stream Deck Icons/Main/Record - Off.png",
                         "command": "change_scene.sh record off"
                     },
                     "8": {
-                        "icon": "/home/pepesan/PycharmProjects/flask-twitch-socketio-chat/Baseline - Stream Deck Icons/Main/Record - On.png",
+                        "icon": "/home/pepesan/PycharmProjects/flask-twitch-socketio-chat/Baseline - Stream Deck Icons/Main/Stream - On.png",
                         "command": "change_scene.sh emit on"
                     },
                     "9": {
-                        "icon": "/home/pepesan/PycharmProjects/flask-twitch-socketio-chat/Baseline - Stream Deck Icons/Main/Record - Off.png",
+                        "icon": "/home/pepesan/PycharmProjects/flask-twitch-socketio-chat/Baseline - Stream Deck Icons/Main/Stream - Off.png",
                         "command": "change_scene.sh emit off"
                     },
-                    "10": {},
-                    "11": {},
-                    "12": {},
-                    "13": {},
+                    "10": {
+                        "icon": "/home/pepesan/PycharmProjects/flask-twitch-socketio-chat/Baseline - Stream Deck Icons/Main/Mic - On.png",
+                        "command": "change_scene.sh mute \"Mic/Aux 2\" on"
+                    },
+                    "11": {
+                        "icon": "/home/pepesan/PycharmProjects/flask-twitch-socketio-chat/Baseline - Stream Deck Icons/Main/Mic - Off.png",
+                        "command": "change_scene.sh mute \"Mic/Aux 2\" off"
+                    },
+                    "12": {
+                        "icon": "/home/pepesan/PycharmProjects/flask-twitch-socketio-chat/Baseline - Stream Deck Icons/Main/Multimedia - Play Pause.png",
+                        "command": "change_scene.sh mute \"Audio del escritorio 2\" on"
+                    },
+                    "13": {
+                        "icon": "/home/pepesan/PycharmProjects/flask-twitch-socketio-chat/Baseline - Stream Deck Icons/Main/Multimedia - Stop.png",
+                        "command": "change_scene.sh mute \"Audio del escritorio 2\" off"
+                    },
                     "14": {
                         "switch_page": 2,
                         "text": "pag2",

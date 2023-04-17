@@ -42,3 +42,29 @@ Edita el fichero .env con los datos del bot:
 * Genera un nuevo Secreto
 * Guarda el client ID y el Client Secret
 * Modifica el TWITCH_CLIENT_ID y el TWITCH_CLIENT_SECRET
+
+## Cliente de Youtube
+Para poder acceder al API de Youtube es necesario seguir una serie de pasos:
+- Inicia sesión en la Consola de Desarrolladores de Google utilizando tu cuenta de Google en el siguiente enlace: https://console.developers.google.com/
+- Crea un nuevo proyecto haciendo clic en el botón "Seleccionar proyecto" en la parte superior de la pantalla y luego en el botón "Nuevo proyecto".
+- Asigna un nombre al proyecto y haz clic en el botón "Crear".
+- Selecciona el proyecto recién creado haciendo clic en el botón "Seleccionar proyecto" en la parte superior de la pantalla y luego en el nombre del proyecto.
+- Activa la API de YouTube haciendo clic en el botón "Habilitar API y servicios" en la página principal del proyecto.
+- Busca "YouTube Data API v3" y selecciónala.
+- Haz clic en el botón "Habilitar" para habilitar la API de YouTube.
+- Haz clic en el botón "Crear credenciales" en la página principal del proyecto.
+- Selecciona "Service Account" en el menú desplegable.
+- Mete los datos: nombre del servicio, service-id y la descripción
+- Pulsa en continuar
+- En la selección de Rol deberías elegir el que te otorgue los privilegios adecuados
+- Por ejemplo Owner te da todos los permisos
+- Lo ideal es que seas conservador y pidas sólo los roles que necesites
+- Después vuelve a pulsar Continuar
+- Lo último sería seleccionar accesos individuales
+- Si has seleccionado los roles necesarios puedes obviar esta parte y pulsar en Done
+- Volverás a la página de credenciales y verás que aparece en la parte de Service Accounts tu Servicio
+- Entra a ese servicio
+- Pulsa en la pestaña Keys y dale a Add Key -> Create New Key
+- Selecciona JSON y pulsa en Create
+- Se descargará un fichero json
+- Coloca el fichero en la carpeta principal del proyecto y renombralo a credentials.json
