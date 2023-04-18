@@ -1,7 +1,14 @@
 from twitchAPI.helper import first
 from twitchAPI.types import SortMethod, TwitchAPIException
-
+import os
+from dotenv import load_dotenv
 import chat_bot
+from chat_bot.bot_class import TARGET_CHANNEL, BOT_USERNAME
+
+# Carga las variables de entorno desde .env
+load_dotenv()
+
+
 
 
 async def get_user_last_video(channel_name, twitch_object):
@@ -27,15 +34,14 @@ async def get_user_last_stream(channel_name, twitch_object):
     return video_data
 
 
-async def shoutout_from_to(channel_name):
-    twitch = await chat_bot.get_chat_bot("")
+async def shoutout_from_to(channel_name, twitch):
     # call the API for the data of your twitch user
     # this returns a async generator that can be used to iterate over all results
     # but we are just interested in the first result
     # using the first helper makes this easy.
     user = await first(twitch.get_users(logins=channel_name))
-    bot = await first(twitch.get_users(logins=chat_bot.BOT_USERNAME))
-    streamer = await first(twitch.get_users(logins=chat_bot.TARGET_CHANNEL))
+    bot = await first(twitch.get_users(logins=BOT_USERNAME))
+    streamer = await first(twitch.get_users(logins=TARGET_CHANNEL))
     await twitch.send_a_shoutout(streamer.id, user.id, bot.id)
     await twitch.close()
 

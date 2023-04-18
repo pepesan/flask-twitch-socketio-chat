@@ -1,22 +1,18 @@
-import os
 from dotenv import load_dotenv
-from twitchAPI import Twitch
-
-from bot_class import TwitchConnection
-from commands import help_command, youtube_command, java_command, angular_command, redes_command, discord_command, \
-    github_command, so_command
+from chat_bot.chat_bot import get_chat_bot
+from chat_bot.commands import help_command, youtube_command, java_command, angular_command, redes_command, \
+    discord_command, github_command, so_command
 from events import on_ready, on_message, on_sub, on_raid
 
 # Carga las variables de entorno desde .env
 load_dotenv()
-from twitchAPI.types import AuthScope, ChatEvent, SortMethod, TwitchAPIException, TwitchBackendException
-from twitchAPI.chat import Chat, EventData, ChatMessage, ChatSub, ChatCommand
+from twitchAPI.types import ChatEvent
+from twitchAPI.chat import Chat
 import asyncio
 
 
 async def run():
-    connection = TwitchConnection()
-    twitch = await connection.twitch
+    twitch = await get_chat_bot("")
     # create chat instance
     chat = await Chat(twitch)
 
@@ -48,7 +44,7 @@ async def run():
     finally:
         # now we can close the chat bot and the twitch api client
         chat.stop()
-        await connection.twitch.close()
+        await twitch.close()
 
 
 if __name__ == '__main__':

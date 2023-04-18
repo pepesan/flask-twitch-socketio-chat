@@ -1,4 +1,5 @@
 import os
+
 from dotenv import load_dotenv
 
 # Carga las variables de entorno desde .env
@@ -6,15 +7,6 @@ load_dotenv()
 from twitchAPI import Twitch
 from twitchAPI.oauth import UserAuthenticator
 from twitchAPI.types import AuthScope, ChatEvent, SortMethod, TwitchAPIException
-
-
-async def user_refresh(token: str, refresh_token: str):
-    print(f'my new user token is: {token}')
-
-
-async def app_refresh(token: str):
-    print(f'my new app token is: {token}')
-
 
 APP_ID = os.environ['TWITCH_CLIENT_ID']
 APP_SECRET = os.environ['TWITCH_CLIENT_SECRET']
@@ -31,13 +23,29 @@ TARGET_CHANNEL = os.environ['TWITCH_CHANNEL']
 BOT_USERNAME = os.environ['TWITCH_USERNAME']
 
 
-async def get_chat_bot(twitch):
-    if twitch == "":
+class TwitchConnection:
+    def __init__(self):
+        self._twitch = None
+
+    @property
+    async def twitch(self):
+        if not self._twitch:
+            print("Pillando conexión")
+            await self.connect()
+        return self._twitch
+
+    async def connect(self):
         # set up twitch api instance and add user authentication with some scopes
         twitch = await Twitch(APP_ID, APP_SECRET)
-        twitch.app_auth_refresh_callback = app_refresh
-        twitch.user_auth_refresh_callback = user_refresh
+        twitch.app_auth_refresh_callback = self.app_refresh
+        twitch.user_auth_refresh_callback = self.user_refresh
         auth = UserAuthenticator(twitch, USER_SCOPE, force_verify=False)
         token, refresh_token = await auth.authenticate()
         await twitch.set_user_authentication(token, USER_SCOPE, refresh_token)
-    return twitch
+        return twitch
+
+    async def user_refresh(token: str, refresh_token: str):
+        print(f'my new user token is: {token}')
+
+    async def app_refresh(token: str):
+        print(f'my new app token is: {token}')

@@ -1,8 +1,8 @@
 from twitchAPI.chat import ChatCommand
 from twitchAPI.types import TwitchAPIException
 
-import chat_bot
-from api_service import chat_so, get_user_last_stream
+from chat_bot import chat_bot
+from chat_bot.api_service import shoutout_from_to, chat_so, get_user_last_stream
 
 
 async def help_command(cmd: ChatCommand):
@@ -52,6 +52,11 @@ async def so_command(cmd: ChatCommand):
     channel_name = cmd.parameter
     try:
         twitch = await chat_bot.get_chat_bot("")
+        try:
+            await shoutout_from_to(channel_name, twitch)
+        except TwitchAPIException as t:
+            print("An exception while getting user data")
+            print(t)
         await chat_so(channel_name, cmd, twitch)
         try:
             stream_data = await get_user_last_stream(channel_name, twitch)
