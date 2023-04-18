@@ -1,5 +1,8 @@
 import os
 from dotenv import load_dotenv
+from twitchAPI import Twitch
+
+from bot_class import TwitchConnection
 from commands import help_command, youtube_command, java_command, angular_command, redes_command, discord_command, \
     github_command, so_command
 from events import on_ready, on_message, on_sub, on_raid
@@ -10,30 +13,14 @@ from twitchAPI.types import AuthScope, ChatEvent, SortMethod, TwitchAPIException
 from twitchAPI.chat import Chat, EventData, ChatMessage, ChatSub, ChatCommand
 import asyncio
 
-APP_ID = os.environ['TWITCH_CLIENT_ID']
-APP_SECRET = os.environ['TWITCH_CLIENT_SECRET']
-USER_SCOPE = [
-    # leer el chat
-    AuthScope.CHAT_READ,
-    # escribir en el chat
-    AuthScope.CHAT_EDIT,
-    # mandar SO's (el usuario del bot debe ser moderador)
-    AuthScope.MODERATOR_MANAGE_SHOUTOUTS,
-    # leer followers (el usuario del bot debe ser moderador)
-    AuthScope.MODERATOR_READ_FOLLOWERS]
-TARGET_CHANNEL = os.environ['TWITCH_CHANNEL']
-BOT_USERNAME = os.environ['TWITCH_USERNAME']
-
 
 async def run():
-    import chat_bot
-    # set up twitch api instance and add user authentication with some scopes
-    twitch = await chat_bot.get_chat_bot("")
+    connection = TwitchConnection()
+    twitch = await connection.twitch
     # create chat instance
     chat = await Chat(twitch)
 
     # register the handlers for the events you want
-
     # listen to when the bot is done starting up and ready to join channels
     chat.register_event(ChatEvent.READY, on_ready)
     # listen to chat messages
@@ -61,7 +48,7 @@ async def run():
     finally:
         # now we can close the chat bot and the twitch api client
         chat.stop()
-        await twitch.close()
+        await connection.twitch.close()
 
 
 if __name__ == '__main__':
