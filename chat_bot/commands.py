@@ -7,7 +7,13 @@ from chat_bot.api_service import shoutout_from_to, chat_so, get_user_last_stream
 
 async def help_command(cmd: ChatCommand):
     # print(cmd)
-    await cmd.reply('Ayuda: puedes usar los comandos: !youtube !redes !java !angular !github !discord')
+    await cmd.reply('Ayuda: puedes usar los comandos: !youtube !redes !java !javaweb !angular !github !discord')
+
+
+async def grabando_command(cmd: ChatCommand):
+    # print(cmd)
+    await cmd.reply('Estamos grabando un curso para Youtube. Mientras tanto no podemos atender al chat. Cuando '
+                    'terminemos podemos atender tus preguntas.')
 
 
 async def youtube_command(cmd: ChatCommand):
@@ -26,6 +32,19 @@ async def java_command(cmd: ChatCommand):
     # print(cmd)
     await cmd.reply("Este es el enlace al curso de java en Youtube: "
                     "https://www.youtube.com/watch?v=JExfQrDN03k&list=PLd7FFr2YzghOjHnoLF_yLjjOFnknA8qJj")
+
+
+async def javaweb_command(cmd: ChatCommand):
+    # print(cmd)
+    await cmd.reply("Este es el enlace al curso de java Web en Youtube: "
+                    "https://www.youtube.com/playlist?list=PLd7FFr2YzghNRITcQTMsuW5puOPGH3-PV")
+
+
+async def typescript_command(cmd: ChatCommand):
+    # print(cmd)
+    await cmd.reply("Este es el enlace al curso de Typescript en Youtube "
+                    "y el repositorio de código: "
+                    "https://github.com/pepesan/curso-typescript-twitch")
 
 
 async def angular_command(cmd: ChatCommand):
@@ -72,4 +91,3 @@ async def so_command(cmd: ChatCommand):
     except TwitchAPIException as t:
         print("An exception while shoutouting")
         print(t)
-

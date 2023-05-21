@@ -1,7 +1,7 @@
 from dotenv import load_dotenv
 from chat_bot.chat_bot import get_chat_bot
 from chat_bot.commands import help_command, youtube_command, java_command, angular_command, redes_command, \
-    discord_command, github_command, so_command
+    discord_command, github_command, so_command, javaweb_command, typescript_command, grabando_command
 from events import on_ready, on_message, on_sub, on_raid
 
 # Carga las variables de entorno desde .env
@@ -29,7 +29,10 @@ async def run():
     # chat.register_command('reply', test_command)
     chat.register_command('help', help_command)
     chat.register_command('youtube', youtube_command)
+    chat.register_command('grabando', grabando_command)
     chat.register_command('java', java_command)
+    chat.register_command('javaweb', javaweb_command)
+    chat.register_command('typescript', typescript_command)
     chat.register_command('angular', angular_command)
     chat.register_command('redes', redes_command)
     chat.register_command('discord', discord_command)

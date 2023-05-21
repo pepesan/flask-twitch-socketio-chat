@@ -55,7 +55,7 @@ async def chat_so(channel_name, cmd, twitch_object):
             # print(video.type)
             # print(video.title)
             # print(video.description)
-            await cmd.reply(f"Echale un vistazo al canal de https://twitch.tv/{channel_name}."
+            await cmd.reply(f"Echale un vistazo al canal de https://twitch.tv/{channel_name} ."
                             f" El último video fue sobre: {video.title}")
             break
         stream_data = await get_user_last_stream(channel_name, twitch_object)

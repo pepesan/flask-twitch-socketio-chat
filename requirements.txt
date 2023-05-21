@@ -1,11 +1,20 @@
 eventlet==0.33.3
+# Carga de ficheros .env
 python-dotenv==0.20.0
+# biblioteca TwitchIO
 twitchio==2.6.0
+# TwitchAPI
 twitchAPI==3.10.0
-flask~=2.2.3
 chardet==5.1.0
 cchardet==2.1.7
+# Comunicación con OBS
 obsws_python==1.4.2
-google-api-python-client==2.85.0
+# Consulta del API De Google
+google-api-python-client==2.86.0
 google-auth-oauthlib==1.0.0
 google-auth-httplib2==0.1.0
+# TTS
+TTS==0.13.3
+pyaudio==0.2.13
+# GUI
+pyside6==6.5.0

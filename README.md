@@ -1,9 +1,8 @@
 # Servidor de Python para cliente del chat de twitch
 
-## app.py (TwitchIO)
-### Instalación de dependencias
+## Instalación de dependencias
 pip install -r requirements.txt
-
+## app.py (TwitchIO)
 ### Configuración
 
 * Configura una nueva cuenta en Twitch para el bot
@@ -68,3 +67,29 @@ Para poder acceder al API de Youtube es necesario seguir una serie de pasos:
 - Selecciona JSON y pulsa en Create
 - Se descargará un fichero json
 - Coloca el fichero en la carpeta principal del proyecto y renombralo a credentials.json
+
+## TTS
+### Ubuntu Install
+$ sudo apt-get install portaudio19-dev
+$ sudo apt-get install espeak
+
+## GUI
+### Desarrollo con Qt Designer (ubuntu 22.04)
+sudo apt install designer-qt6
+ir al directorio : /usr/lib/x86_64-linux-gnu/qtchooser
+crear el fichero: qt6.conf
+Meter el contenido:
+/usr/lib/qt6/bin
+/usr/lib/x86_64-linux-gnu
+
+modificar el .bashrc al final:
+export  QT_SELECT=qt6
+### Official Guide 
+https://doc.qt.io/qtforpython-6/gettingstarted/index.html
+
+## Arrancar el QT6 Designer
+designer
+
+
+
+

@@ -18,7 +18,10 @@ print(sys.argv[1])
 print(sys.argv[2])
 
 # load conn info from config.toml
-cl = obs.ReqClient(host=os.environ['OBS_HOST'], port=os.environ['OBS_PORT'], password=os.environ['OBS_PASSWORD'])
+cl = obs.ReqClient(
+    host=os.environ['OBS_HOST'],
+    port=os.environ['OBS_PORT'],
+    password=os.environ['OBS_PASSWORD'])
 
 
 def cambia_escena(escena):
@@ -51,11 +54,11 @@ def mute(fuente, efecto):
         cl.set_input_mute(fuente, True)
 
 
-#Pillar el lisatdo de inputs
-resp = cl.get_input_list()
-print(resp.inputs)
-for input in resp.inputs:
-   print(input)
+#Pillar el listado de inputs
+#resp = cl.get_input_list()
+#print(resp.inputs)
+#for input in resp.inputs:
+#   print(input)
 
 print("seleccionado comando")
 
