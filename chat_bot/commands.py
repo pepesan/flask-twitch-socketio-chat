@@ -43,6 +43,7 @@ async def javaweb_command(cmd: ChatCommand):
 async def typescript_command(cmd: ChatCommand):
     # print(cmd)
     await cmd.reply("Este es el enlace al curso de Typescript en Youtube "
+                    " https://www.youtube.com/playlist?list=PLd7FFr2YzghNmAgEDpfZeWsb5DuiOLHbB "
                     "y el repositorio de código: "
                     "https://github.com/pepesan/curso-typescript-twitch")
 
@@ -51,6 +52,12 @@ async def angular_command(cmd: ChatCommand):
     # print(cmd)
     await cmd.reply("Este es el enlace al curso de angular en Youtube: "
                     "https://www.youtube.com/watch?v=UGBWmShB4J8&list=PLd7FFr2YzghNPi66KMyBbrBmJzH-RPYz0")
+
+
+async def ansible_command(cmd: ChatCommand):
+    # print(cmd)
+    await cmd.reply("Este es el enlace al curso de ansible en Youtube: "
+                    "https://www.youtube.com/watch?v=aYfqoh1PhBk&list=PLd7FFr2YzghNETVzT99w0hiWUDRNsqkq6")
 
 
 async def github_command(cmd: ChatCommand):

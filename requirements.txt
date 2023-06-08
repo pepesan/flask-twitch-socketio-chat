@@ -18,3 +18,7 @@ TTS==0.13.3
 pyaudio==0.2.13
 # GUI
 pyside6==6.5.0
+# Youtube download
+pytube==15.0.0
+ffmpeg-python==0.2.0
+pydub==0.25.1
