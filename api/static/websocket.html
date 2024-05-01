@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>WebSocket Client</title>
+    <style>
+        #messages {
+            height: 200px;
+            overflow-y: scroll;
+            border: 1px solid #ccc;
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>WebSocket Client</h1>
+    <div id="messages"></div>
+    <input type="text" id="messageInput" placeholder="Enter message">
+    <button onclick="sendMessage()">Send</button>
+    <script>
+        const socket = new WebSocket("ws://localhost:8888/websocket");
+
+        function displayMessage(message) {
+            const messagesDiv = document.getElementById("messages");
+            const p = document.createElement("p");
+            p.textContent = message;
+            messagesDiv.appendChild(p);
+        }
+        function sendDirectMessage(message) {
+            socket.send(message);
+        }
+        function sendMessage() {
+            const messageInput = document.getElementById("messageInput");
+            const message = messageInput.value;
+
+            socket.send(message);
+
+            messageInput.value = ""; // Limpiar el campo de entrada después de enviar el mensaje
+        }
+
+        socket.onopen = function(event) {
+            console.log("WebSocket connection opened");
+            sendDirectMessage("GET");
+            const messageInput = document.getElementById("messageInput");
+            const sendButton = document.querySelector("button");
+
+            messageInput.disabled = false;
+            sendButton.disabled = false;
+        };
+
+
+        socket.onmessage = function(event) {
+            const message = event.data;
+            console.log("WebSocket message received:", message);
+            displayMessage(message);
+        };
+
+        socket.onclose = function(event) {
+            console.log("WebSocket connection closed");
+        };
+
+        socket.onping = function(event) {
+            // Responder al ping
+            socket.pong();
+            console.log("WebSocket ping received and pong sent");
+        };
+
+
+    </script>
+</body>
+</html>

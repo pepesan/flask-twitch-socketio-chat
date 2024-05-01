@@ -3,9 +3,9 @@ if [ "$#" -ne 1 ]; then
     echo "Illegal number of parameters"
 fi
 
-conda info --envs >>  /home/pepesan/salida-streamdeck.txt
+#conda info --envs >>  /home/pepesan/salida-streamdeck.txt
 eval "$(conda shell.bash hook)"
-conda activate flask-twitch-socketio-chat
+conda activate streamdeck
 echo "$1" >> /home/pepesan/salida-streamdeck.txt
 echo "$2" >> /home/pepesan/salida-streamdeck.txt
 echo "$3" >> /home/pepesan/salida-streamdeck.txt

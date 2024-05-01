@@ -1,0 +1,9 @@
+# Fichero para levantar un servidor rabbitmq
+version: '3'
+services:
+  rabbitmq:
+    image: rabbitmq:3-management
+    restart: always
+    ports:
+      - 5672:5672
+      - 15672:15672
